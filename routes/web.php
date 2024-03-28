@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\welcomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [welcomeController::class,'index']);
 Route::get('/js/{file}', function ($file) {
     return response()->file(public_path('js/' . $file), ['Content-Type' => 'application/javascript']);
 });
