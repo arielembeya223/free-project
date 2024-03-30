@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom';
 import CubeAnimation from './CubeAnimation';
 
 function Welcome() {
@@ -31,11 +31,11 @@ function Welcome() {
         <nav className="navbar navbar-expand-lg navbar-dark">
           <div className="container">
             <a className="navbar-brand" href="#">Free Social</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav ml-auto">
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item active">
                   <a className="nav-link" href="#">Accueil</a>
                 </li>
@@ -52,49 +52,23 @@ function Welcome() {
       </header>
 
       {/* Contenu principal */}
-      <main className="py-5">
+      <main className="py-5" style={{ minHeight: 'calc(100vh - 130px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div className="container text-center">
-          <h2>Rejoignez Free Social</h2>
-          <p className="lead">Connectez-vous ou inscrivez-vous pour commencer à utiliser Free Social.</p>
-          <div className="mt-4">
-            <a href="#" className="btn btn-primary mr-5">Se connecter</a>
-            <a href="#" className="btn btn-secondary m-3">S'inscrire</a>
-          </div>
-          <div className="features py-5">
-            <h3>Fonctionnalités de Free Social</h3>
-            <motion.div
-              className="feature mb-4"
-              style={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h4 className="font-size-xxl">Communication mondiale</h4>
-              <p className="font-size-lg">Communiquez avec tout le monde sans barrières linguistiques.</p>
-            </motion.div>
-            <motion.div
-              className="feature mb-4"
-              style={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h4 className="font-size-xxl">Chats et discussions</h4>
-              <p className="font-size-lg">Ouvrez des canaux de discussion avec n'importe qui et parlez-leur dans leur propre langue.</p>
-            </motion.div>
-            <motion.div
-              className="feature mb-4"
-              style={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <h4 className="font-size-xxl">Traduction vocale</h4>
-              <p className="font-size-lg">Traduisez les messages vocaux en temps réel dans la langue de votre interlocuteur.</p>
-            </motion.div>
+          <div>
+            <h2 style={{ fontWeight: 700 }}>Rejoignez Free Social</h2>
+            <p className="lead" style={{ fontSize: '1.4rem' }}>Connectez-vous ou inscrivez-vous pour commencer à utiliser Free Social.</p>
+            <div className="mt-4">
+              <a href="#" className="btn btn-primary me-3 rounded px-4">Se connecter</a> {/* Ajout de la classe "rounded-pill" pour des coins arrondis et de la classe "px-4" pour un espacement horizontal */}
+              <a href="#" className="btn btn-secondary rounded px-4">S'inscrire</a> {/* Ajout de la classe "rounded-pill" pour des coins arrondis et de la classe "px-4" pour un espacement horizontal */}
+            </div>
           </div>
         </div>
       </main>
+
+      {/* Fonctionnalités */}
+      <div className="features py-5">
+        {/* Ajoutez vos fonctionnalités ici */}
+      </div>
 
       {/* Animation */}
       <CubeAnimation />
@@ -103,7 +77,7 @@ function Welcome() {
 }
 
 if (document.getElementById('welcome')) {
-  const Index = ReactDOM.createRoot(document.getElementById("welcome"));
+  const Index = createRoot(document.getElementById("welcome"));
 
   Index.render(
     <React.StrictMode>
