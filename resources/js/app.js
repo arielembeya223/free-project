@@ -13,3 +13,6 @@ import './bootstrap';
  */
 
 import './components/welcome';
+import './components/RegistrationForm';
+import './components/LoginForm';
+import  './components/header';
