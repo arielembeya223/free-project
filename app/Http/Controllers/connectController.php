@@ -10,4 +10,7 @@ class connectController extends Controller
     {
             return view('connect');
     }
+    public function login(){
+        var_dump('bonjour');
+    }
 }

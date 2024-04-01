@@ -8,6 +8,10 @@ class inscriptionController extends Controller
 {
     public function index()
     {
-        return view('inscription');
+        return view("inscription");
+    }
+    public function registration()
+    {
+        var_dump('bonjour');
     }
 }

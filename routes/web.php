@@ -18,6 +18,8 @@ use App\Http\Controllers\welcomeController;
 Route::get('/', [welcomeController::class,'index'])->name('welcome');
 Route::get('/connect',[connectController::class,'index'])->name('connect');
 Route::get('/inscription',[inscriptionController::class,'index'])->name('inscription');
+Route::post('/inscription',[inscriptionController::class,'registration'])->name('registration');
+Route::post('/connect',[connectController::class,'login'])->name("login");
 Route::get('/js/{file}', function ($file) {
     return response()->file(public_path('js/' . $file), ['Content-Type' => 'application/javascript']);
 });

@@ -24,7 +24,6 @@ function LoginForm() {
   return (
     <div>
       <h2>Connexion</h2>
-      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email :</label>
           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="form-control" required />
@@ -34,7 +33,6 @@ function LoginForm() {
           <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />
         </div>
         <button type="submit" className="btn btn-primary">Se connecter</button>
-      </form>
     </div>
   );
 }
