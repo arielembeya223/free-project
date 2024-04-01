@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\RegistrationRequest;
 use Illuminate\Http\Request;
 
 class inscriptionController extends Controller
@@ -10,8 +10,8 @@ class inscriptionController extends Controller
     {
         return view("inscription");
     }
-    public function registration()
+    public function registration(RegistrationRequest $request)
     {
-        var_dump('bonjour');
+        var_dump($request->validated());
     }
 }

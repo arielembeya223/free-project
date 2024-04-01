@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\loginRequest;
 use Illuminate\Http\Request;
 
 class connectController extends Controller
@@ -10,7 +10,7 @@ class connectController extends Controller
     {
             return view('connect');
     }
-    public function login(){
-        var_dump('bonjour');
+    public function login(loginRequest $request){
+        var_dump($request->validated());
     }
 }
