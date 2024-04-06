@@ -26,11 +26,11 @@ function LoginForm() {
       <h2>Connexion</h2>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email :</label>
-          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="form-control" required />
+          <input type="email" id="email" name="email"  placeholder="exemple@gmail.com" value={formData.email} onChange={handleChange} className="form-control" required />
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Mot de passe :</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />
+          <input type="password" id="password" name="password" placeholder='password' value={formData.password} onChange={handleChange} className="form-control" required />
         </div>
         <button type="submit" className="btn btn-primary">Se connecter</button>
     </div>

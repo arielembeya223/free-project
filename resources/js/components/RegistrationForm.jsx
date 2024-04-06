@@ -45,13 +45,13 @@ function RegistrationForm() {
     name: '',
     email: '',
     password: '',
-    language: 'fr' // Langue par défaut
+    lang: 'fr' // Langue par défaut
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name === 'lang' ? 'lang' : e.target.name]: e.target.value
     });
   };
 
@@ -67,19 +67,19 @@ function RegistrationForm() {
       <div>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Nom :</label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="form-control" required />
+          <input type="text" id="name" name="name" placeholder='nom' value={formData.name} onChange={handleChange} className="form-control" required />
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email :</label>
-          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="form-control" required />
+          <input type="email" id="email" name="email" placeholder='exemple@gmail.com' value={formData.email} onChange={handleChange} className="form-control" required />
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Mot de passe :</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />
+          <input type="password" id="password" name="password" placeholder='password' value={formData.password} onChange={handleChange} className="form-control" required />
         </div>
         <div className="mb-3 d-flex align-items-center">
           <label htmlFor="language" className="form-label me-2">Langue :</label>
-          <select id="language" name="language" value={formData.language} onChange={handleChange} className="form-select" required>
+          <select id="language" name="lang" value={formData.lang} onChange={handleChange} className="form-select" required>
             <option value="fr">{getLanguageName('fr')}</option>
             <option value="en">{getLanguageName('en')}</option>
             <option value="es">{getLanguageName('es')}</option>
@@ -88,10 +88,11 @@ function RegistrationForm() {
             {/* Ajouter d'autres langues avec les drapeaux correspondants */}
           </select>
           <div style={{marginLeft: '10px'}}>
-            <FlagIcon code={getFlagCode(formData.language)} />
+            <FlagIcon code={getFlagCode(formData.lang)} />
           </div>
         </div>
-        <button  className="btn btn-primary">S'inscrire</button>
+        <input type="hidden" name="lang" value={formData.lang} />
+        <button className="btn btn-primary">S'inscrire</button>
       </div>
     </div>
   );
