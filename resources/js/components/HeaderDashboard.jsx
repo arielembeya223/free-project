@@ -1,6 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom';
+//url de connexion
+const show = window.dash.show;
 
+
+// url d'inscription
+const message = window.dash.message;
+
+
+// Récupérer de home page
+const annonce = window.dash.annonce;
+////
 export function HeaderDashboard() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{paddingTop: '20px', paddingBottom: '20px'}}>
@@ -13,16 +23,16 @@ export function HeaderDashboard() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">Accueil</a>
+              <a className="nav-link"  href={show}>Accueil</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Messages</a>
+              <a className="nav-link" href={message}>Messages</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Paramètres</a>
+              <a className="nav-link"  href={annonce}>Annonces</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Dashboard</a>
+              <a className="nav-link"  href="#">Dashboard</a>
             </li>
           </ul>
         </div>
@@ -31,9 +41,8 @@ export function HeaderDashboard() {
   );
 }
 
-if (document.getElementById('HeaderDashboard')) {
-  const Index = createRoot(document.getElementById("HeaderDashboard"));
-
+if (document.getElementById('headerDashboard')) {
+  const Index = createRoot(document.getElementById("headerDashboard"));
   Index.render(
     <React.StrictMode>
       <HeaderDashboard />

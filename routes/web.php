@@ -23,6 +23,9 @@ Route::post('/inscription',[inscriptionController::class,'registration'])->name(
 Route::post('/connect',[connectController::class,'login'])->name("login");
 Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->middleware("auth")->name("dashboard.")->group(function(){
    route::get("/show","show")->name("show");
+   route::get("/message","message")->name("message"); 
+   route::get("/annonce","annonce")->name("annonce"); 
+
 });
 Route::get('/js/{file}', function ($file) {
     return response()->file(public_path('js/' . $file), ['Content-Type' => 'application/javascript']);

@@ -10,4 +10,12 @@ class dashboardController extends Controller
     {
         return view("dashboard.show");
     }
+    public function message()
+    {
+        return view("dashboard.message");
+    }
+    public function annonce()
+    {
+        return view("dashboard.annonce");
+    }
 }
