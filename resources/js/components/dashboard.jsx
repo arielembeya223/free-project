@@ -11,7 +11,7 @@ function Dashboard() {
       <HeaderDashboard />
       <div className="mt-4">
         <div className="row">
-          <DiscussionZone className="col-md-2" />
+          <DiscussionZone className="col-md-3" />
           <TweetZone className="col-md-6" />
           <SettingsDashboardZone className="col-md-3" />
         </div>
