@@ -1,0 +1,35 @@
+/* styles.css */
+.custom-textarea {
+  position: relative;
+  margin-top: 20px; /* Déplacer légèrement vers le bas */
+}
+
+.custom-textarea textarea {
+  width: 100%; /* Largeur à 100% */
+  height: 40px; /* Hauteur similaire au champ de saisie actuel */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 10px;
+  overflow: hidden; /* Supprime la barre de défilement */
+}
+
+.custom-textarea .icons {
+  position: absolute;
+  bottom: 17px; /* Ajustement vertical */
+  right: 10px; /* Ajustement horizontal */
+}
+
+.custom-textarea .icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.custom-textarea .icons button svg {
+  width: 20px;
+  height: 20px;
+  color: #555; /* Modifier la couleur au besoin */
+}
