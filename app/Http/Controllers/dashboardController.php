@@ -18,4 +18,8 @@ class dashboardController extends Controller
     {
         return view("dashboard.annonce");
     }
+    public function compte()
+    {
+        return view("dashboard.compte");
+    }
 }

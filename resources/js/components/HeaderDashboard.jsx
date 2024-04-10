@@ -11,6 +11,8 @@ const message = window.dash.message;
 // Récupérer de home page
 const annonce = window.dash.annonce;
 ////
+const compte=window.dash.compte;
+///
 export function HeaderDashboard() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{paddingTop: '20px', paddingBottom: '20px'}}>
@@ -32,7 +34,7 @@ export function HeaderDashboard() {
               <a className="nav-link"  href={annonce}>Annonces</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link"  href="#">Dashboard</a>
+              <a className="nav-link"  href={compte}>Dashboard</a>
             </li>
           </ul>
         </div>

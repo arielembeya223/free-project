@@ -1,11 +1,11 @@
 @extends("base")
 @section("content")
 <div id="headerDashboard"></div>
-  <div id="Annonce"></div>
+<div id="Compte"></div>
   @php
     $id = Auth::id();
    @endphp
- <script>
+<script>
   window.dash = {
       show: "{{ route('dashboard.show',['user'=>$id]) }}",
       message:"{{Route('dashboard.message',['user'=>$id] )}}",
