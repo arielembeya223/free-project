@@ -19,6 +19,6 @@ import  './components/header';
 import "./components/dashboard"
 import './components/HeaderDashboard';
 import './components/Messages'
-import "./components/Annonce"
-import "./components/compte"
+import "./components/Annonce";
+import "./components/Profil"
 
