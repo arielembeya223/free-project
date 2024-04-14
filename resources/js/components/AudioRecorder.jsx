@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AudioRecorder() {
+const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState(null);
@@ -27,26 +27,20 @@ function AudioRecorder() {
   };
 
   const handleDataAvailable = (event) => {
-    setChunks([...chunks, event.data]);
+    setChunks(prevChunks => [...prevChunks, event.data]);
   };
 
   const handleStopRecording = () => {
-    const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+    const blob = new Blob(chunks, { type: 'audio/mp3' });
     const url = URL.createObjectURL(blob);
     setAudioURL(url);
-
-    // Récupérer la durée de l'enregistrement
-    const audioElement = new Audio(url);
-    audioElement.addEventListener('loadedmetadata', () => {
-      console.log('Durée de l\'enregistrement :', audioElement.duration, 'secondes');
-    });
   };
 
   const downloadAudio = () => {
     if (audioURL) {
       const downloadLink = document.createElement('a');
       downloadLink.href = audioURL;
-      downloadLink.setAttribute('download', 'audio');
+      downloadLink.setAttribute('download', 'audio.mp3');
       downloadLink.click();
     }
   };

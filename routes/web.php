@@ -26,9 +26,13 @@ Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->midd
    route::get("/message","message")->name("message"); 
    route::get("/annonce","annonce")->name("annonce");
    route::get("/compte","compte")->name("compte");
+   Route::post("/add-contact",'addContact')->name("addContact");
 
 });
 Route::get('/js/{file}', function ($file) {
     return response()->file(public_path('js/' . $file), ['Content-Type' => 'application/javascript']);
 });
 
+Route::get('/csrf-token', function() {
+    return response()->json(['csrf_token' => csrf_token()]);
+});

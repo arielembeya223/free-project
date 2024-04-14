@@ -59,7 +59,7 @@ function MessageThread({ activeContact }) {
         ))}
       </div>
       <div className="App">
-        <form action="" method="">
+        <form action="" method="POST">
           <CustomTextarea placeholder="Écrivez votre message..." />
         </form>
       </div>

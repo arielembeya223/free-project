@@ -60,7 +60,7 @@ const CustomTextarea = ({ placeholder }) => {
       ></textarea>
       <div className="icons">
         <button
-          type="button"
+          type="submit"
           onClick={sendMessage}
         >
           <FontAwesomeIcon icon={faPaperPlane} />
