@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
 use App\Models\User;
 use App\Models\Contact;
+use Illuminate\Support\Facades\Auth;
 class dashboardController extends Controller
 {
     public function show()
@@ -20,15 +21,16 @@ class dashboardController extends Controller
     {
         return view("dashboard.annonce");
     }
-    public function compte()
+    public function compte(Request $request)
     {
-        $csrfToken = csrf_token();
-        
+       
         return view("dashboard.compte");
-    
     }
     
-    
+    public function conversation(Request $request)
+    {
+        return view("dashboard.conversation"); 
+    }
     public function addContact(addRequest $request)
     {
        
@@ -52,5 +54,9 @@ class dashboardController extends Controller
     }
 
         
+    }
+    public function send()
+    {
+        var_dump("bonjour");
     }
 }

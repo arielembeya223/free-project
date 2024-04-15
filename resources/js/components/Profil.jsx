@@ -29,15 +29,7 @@ const customStyles = {
   },
 };
 
-function Contacts() {
-  // Supposons que contacts est un tableau d'objets avec les détails des contacts
-  const contacts = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Alice Johnson" },
-    { id: 4, name: "Bob Brown" },
-  ];
-
+function Contacts({ contacts }) {
   return (
     <div className="card">
       <div className="card-header">Contacts</div>
@@ -54,6 +46,7 @@ function Profil() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newContactName, setNewContactName] = useState('');
   const [csrfToken, setCsrfToken] = useState('');
+  const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
     // Récupération du token CSRF lors du chargement du composant
@@ -66,7 +59,17 @@ function Profil() {
       }
     };
 
+    const fetchContacts = async () => {
+      try {
+        const response = await axios.get('/contacts');
+        setContacts(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des contacts :', error);
+      }
+    };
+
     fetchCsrfToken();
+    fetchContacts();
   }, []);
 
   const openModal = () => {
@@ -101,7 +104,7 @@ function Profil() {
     <div className="container mt-4">
       <div className="row">
         <div className="col-md-3">
-          <Contacts />
+          <Contacts contacts={contacts} />
         </div>
         <div className="col-md-9">
           <div className="card">

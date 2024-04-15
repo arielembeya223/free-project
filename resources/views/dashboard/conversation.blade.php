@@ -1,7 +1,7 @@
 @extends("base")
 @section("content")
 <div id="headerDashboard"></div>
-<div id="Messages"></div>
+<div id="Conversation"></div>
   @php
     $id = Auth::id();
    @endphp

@@ -33,5 +33,5 @@ Route::middleware('csrf')->group(function () {
         Route::post("/add-contact",'addContact')->name("addContact");
     });
 });
-
+Route::middleware('auth:sanctum')->get('/contacts', 'ajaxController@index');
  
