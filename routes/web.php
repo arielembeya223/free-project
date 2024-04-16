@@ -30,6 +30,7 @@ Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->midd
    route::get("/compte","compte")->name("compte");
    Route::post("/add-contact",'addContact')->name("addContact");
    Route::get("/conversation-{to}",'conversation')->name("conversation");
+  // Route::get("/conversation-{to}", [ajaxController::class,'messages'])->name("conversation");
    Route::post("/conversation-{to}",'send')->name("send");
 });
 Route::get('/js/{file}', function ($file) {
@@ -40,3 +41,5 @@ Route::get('/csrf-token', function() {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 Route::get('/contacts', [ajaxController::class,'index']);
+//messages
+Route::get('/messages', [ajaxController::class,'messages']);

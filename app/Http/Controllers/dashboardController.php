@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
 use App\Models\User;
 use App\Models\Contact;
+use App\Models\discussion;
 use Illuminate\Support\Facades\Auth;
 class dashboardController extends Controller
 {
@@ -55,8 +56,21 @@ class dashboardController extends Controller
 
         
     }
-    public function send()
+    public function send(addRequest $request)
     {
-        var_dump("bonjour");
+        $form=$request->validated();
+        $content=$form['content'];
+
+
+    
+        $type="texte";
+        $data=[
+            'sender_id'=>$request->route("user"),
+            'receiver_id'=>$request->route("to"),
+            'type'=>'text',
+            'contenu'=>$content
+        ];
+        discussion::create($data);
+        return back()->with("success",'contact ajoute');
     }
 }

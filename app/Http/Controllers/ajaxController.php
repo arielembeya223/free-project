@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\discussion;
 class ajaxController extends Controller
 {
       public function index(Request $request)
@@ -15,5 +16,42 @@ class ajaxController extends Controller
             ->get();
        
         return response()->json($contacts);
+    }
+    public function messages(Request $request)
+    {
+        $url_referer = $_SERVER['HTTP_REFERER'];
+
+        // Divisez l'URL en segments en utilisant le caractère '/'
+        $segments = explode('/', $url_referer);
+        
+        // Récupérez le dernier segment de l'URL
+        $conversation = end($segments);
+        
+        // Convertissez le numéro en entier
+        $seg_conv=explode('-',$conversation);
+
+        $numero=end($seg_conv);
+        $user = $request->user();
+        $id1 =$user->id;
+        $id2 = $numero;
+        
+        // Récupération des messages de la base de données
+        $messagesFromDatabase = discussion::where('sender_id', $id1)
+            ->where('receiver_id', $id2)
+            ->get();
+    
+        // Construction du tableau de messages à renvoyer
+        $messages = [];
+        foreach ($messagesFromDatabase as $message) {
+            $messages[] = [
+                'id' => $message->id,
+                'contenu' => $message->contenu,
+                'sender_id' => $message->sender_id,
+                'receiver_id' =>$message->receiver_id,
+            ];
+        }
+    
+        // Renvoi des messages au format JSON
+        return response()->json($messages);
     }
 }

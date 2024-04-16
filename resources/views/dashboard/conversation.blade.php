@@ -11,7 +11,8 @@
       message:"{{Route('dashboard.message',['user'=>$id] )}}",
       annonce:"{{Route('dashboard.annonce',['user'=>$id])}}",
       compte:"{{Route('dashboard.compte',['user'=>$id])}}",
-      id:"{{$id}}"
+      id:"{{$id}}",
+      url:"{{app('request')->url()}}"
   };
 </script>
 @endsection
