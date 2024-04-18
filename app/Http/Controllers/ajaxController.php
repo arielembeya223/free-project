@@ -38,6 +38,9 @@ class ajaxController extends Controller
         // Récupération des messages de la base de données
         $messagesFromDatabase = discussion::where('sender_id', $id1)
             ->where('receiver_id', $id2)
+            ->orwhere('sender_id', $id2)
+            ->where('receiver_id', $id1)
+            ->orderBy('created_at', 'asc')
             ->get();
     
         // Construction du tableau de messages à renvoyer

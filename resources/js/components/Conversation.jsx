@@ -18,7 +18,7 @@ function ContactsList({ contacts, setActiveContact }) {
       <ul className="list-group">
         {contacts.map((contact, index) => (
           <li key={index} className="list-group-item" onClick={() => setActiveContact(contact)}>
-            <a href={conv + "-" + contact.id}>{contact.name}</a>
+            <a href={conv + "-" + contact.id} className="text-decoration-none">{contact.name}</a>
           </li>
         ))}
       </ul>
@@ -29,13 +29,23 @@ function ContactsList({ contacts, setActiveContact }) {
 function MessageList({ messages }) {
   return (
     <div className="messages-container">
-      {messages.map(message => (
-        <div key={message.id} style={{ "marginTop": "22px" }} className={message.sender_id === id ? "sent-message text-end" : "received-message text-start"}>
-          <span className={message.sender_id === id? "sent-message-content bg-primary text-light p-2 rounded mb-2" : "received-message-content bg-dark text-light p-2 rounded mb-2"}>
-          {message.contenu}
-          </span>
-        </div>
-      ))}
+      {messages.map(message => {
+        let messageClass = "received-message text-start";
+        let messageContentClass = "received-message-content bg-dark text-light p-2 rounded mb-2";
+        
+        if (message.sender_id != id) {
+            messageClass = "sent-message text-end";
+            messageContentClass = "sent-message-content bg-primary text-light p-2 rounded mb-2";
+        }
+
+        return (
+            <div key={message.id} style={{ "marginTop": "22px" }} className={messageClass}>
+                <span className={messageContentClass}>
+                    {message.contenu}
+                </span>
+            </div>
+        );
+      })}
     </div>
   );
 }
