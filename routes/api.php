@@ -35,4 +35,4 @@ Route::middleware('csrf')->group(function () {
 });
 Route::middleware('auth:sanctum')->get('/contacts', 'ajaxController@index');
 Route::middleware('auth:sanctum')->get('/messages', 'ajaxController@messages');
- 
+Route::middleware('auth:sanctum')->get('/messages', 'ajaxController@post');

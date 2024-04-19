@@ -7,6 +7,7 @@ use  App\Http\Requests\addRequest;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\discussion;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 class dashboardController extends Controller
 {
@@ -72,5 +73,13 @@ class dashboardController extends Controller
         ];
         discussion::create($data);
         return back()->with("success",'contact ajoute');
+    }
+    public function publie(addRequest $request)
+    {
+        $id=$request->user()->id;
+
+        Post::create(['user_id'=>$id,'content'=>$request->validated('content')]);
+
+        return back()->with("success",'Post ajoute');
     }
 }

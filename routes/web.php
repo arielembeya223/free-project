@@ -27,6 +27,7 @@ Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->midd
    route::get("/show","show")->name("show");
    route::get("/message","message")->name("message"); 
    route::get("/annonce","annonce")->name("annonce");
+   route::post("/annonce","publie")->name("publie");
    route::get("/compte","compte")->name("compte");
    Route::post("/add-contact",'addContact')->name("addContact");
    Route::get("/conversation-{to}",'conversation')->name("conversation");
@@ -41,5 +42,6 @@ Route::get('/csrf-token', function() {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 Route::get('/contacts', [ajaxController::class,'index']);
-//messages
+//messages 'ajaxController@post'
 Route::get('/messages', [ajaxController::class,'messages']);
+Route::get('/posts', [ajaxController::class,'post']);

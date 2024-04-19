@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\discussion;
+use App\Models\Post;
 class ajaxController extends Controller
 {
       public function index(Request $request)
@@ -56,5 +57,13 @@ class ajaxController extends Controller
     
         // Renvoi des messages au format JSON
         return response()->json($messages);
+    }
+    public function post(Request $request)
+    {
+        $user = $request->user();
+        $posts = Post::where('user_id', $user->id)
+                    ->get();
+       
+        return response()->json($posts);
     }
 }
