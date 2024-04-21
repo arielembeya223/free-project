@@ -42,6 +42,8 @@ Route::get('/csrf-token', function() {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 Route::get('/contacts', [ajaxController::class,'index']);
-//messages 'ajaxController@post'
+//messages 'ajaxController@post'Tweet lasts
 Route::get('/messages', [ajaxController::class,'messages']);
 Route::get('/posts', [ajaxController::class,'post']);
+Route::get('/tweets', [ajaxController::class,'tweets']);
+Route::get('/lasts', [ajaxController::class,'lasts']);

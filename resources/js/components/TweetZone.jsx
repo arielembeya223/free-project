@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const tweetStyle = {
   width: '60%',
@@ -26,15 +26,21 @@ export function TweetZone() {
   // Simuler des données de tweets avec le nom de l'utilisateur et le contenu du tweet
   const [likes, setLikes] = useState(Array(5).fill(0));
   const [dislikes, setDislikes] = useState(Array(5).fill(0));
+ // Route::get('/tweets', [ajaxController::class,'tweets']);
+ // Route::get('/lasts', [ajaxController::class,'lasts']);
+ const [tweets, setTweets] = useState([]);
+  useEffect(() => {
+    const fetchTweets = async () => {
+      try {
+        const response = await axios.get('/tweets');
+        setTweets(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des contacts :', error);
+      }
+    };
 
-  const tweets = [
-    { user: 'John', content: 'Ceci est un tweet de John.' },
-    { user: 'Jane', content: 'Ceci est un tweet de Jane.' },
-    { user: 'Alice', content: 'Ceci est un tweet de Alice.' },
-    { user: 'Bob', content: 'Ceci est un tweet de Bob.' },
-    { user: 'Eve', content: 'Ceci est un tweet de Eve.' }
-  ];
-
+    fetchTweets();
+  }, []);
   const handleLike = (index) => {
     const updatedLikes = [...likes];
     updatedLikes[index] += 1;
@@ -52,7 +58,7 @@ export function TweetZone() {
       {tweets.map((tweet, index) => (
         <div key={index} className="card shadow-lg rounded-lg mb-3">
           <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <h5 className="card-title">{tweet.user}</h5>
+            <h5 className="card-title"></h5>
             <p className="card-text">{tweet.content}</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               <button type="button" className="btn" onClick={() => handleLike(index)}>

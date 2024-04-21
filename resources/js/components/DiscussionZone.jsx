@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const discussionStyle = {
   width: '20%',
@@ -24,14 +24,19 @@ const listItemHoverStyle = {
 };
 
 export function DiscussionZone() {
-  // Simuler des données de messages avec le nom de l'auteur
-  const messages = [
-    { author: 'John', content: 'Message 1' },
-    { author: 'Jane', content: 'Message 2' },
-    { author: 'Alice', content: 'Message 3' },
-    { author: 'Bob', content: 'Message 4' },
-    { author: 'Eve', content: 'Message 5' }
-  ];
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get('/lasts');
+        setMessages(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des contacts :', error);
+      }
+    };
+  
+    fetchMessages();
+  }, []);
 
   return (
     <div id="DiscussionZone" className="col-md-3" style={discussionStyle}>
@@ -40,8 +45,8 @@ export function DiscussionZone() {
         <ul style={{ listStyleType: 'none', padding: 0 }}>
           {messages.map((message, index) => (
             <li key={index} style={{ ...listItemStyle, ...(index % 2 === 0 && listItemHoverStyle) }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{message.author}</p>
-              <p style={{ margin: 0 }}>{message.content}</p>
+              <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{message.sender_name}</p>
+              <p style={{ margin: 0 }}>{message.contenu}</p>
             </li>
           ))}
         </ul>

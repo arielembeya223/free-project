@@ -66,4 +66,24 @@ class ajaxController extends Controller
        
         return response()->json($posts);
     }
+    public function tweets()
+    {
+        
+        $tweets = Post::orderBy('created_at', 'desc')->get();
+        
+        return response()->json($tweets);
+    }
+    
+    public function lasts(Request $request)
+    {
+        $user = $request->user();
+        $messages = Discussion::join('users', 'discussions.sender_id', '=', 'users.id')
+                        ->where('discussions.receiver_id', $user->id)
+                        ->orderBy('discussions.created_at', 'desc')
+                        ->select('discussions.*', 'users.name as sender_name')
+                        ->take(5)
+                        ->get();
+        
+        return response()->json($messages);
+    }
 }
