@@ -69,7 +69,10 @@ class ajaxController extends Controller
     public function tweets()
     {
         
-        $tweets = Post::orderBy('created_at', 'desc')->get();
+        $tweets = Post::join('users', 'posts.user_id', '=', 'users.id')
+                ->orderBy('posts.created_at', 'desc')
+                ->select('posts.*', 'users.name as user_name')
+                ->get();
         
         return response()->json($tweets);
     }

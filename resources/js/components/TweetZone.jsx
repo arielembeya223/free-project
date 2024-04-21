@@ -58,7 +58,7 @@ export function TweetZone() {
       {tweets.map((tweet, index) => (
         <div key={index} className="card shadow-lg rounded-lg mb-3">
           <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <h5 className="card-title"></h5>
+            <h5 className="card-title">{tweet.user_name}</h5>
             <p className="card-text">{tweet.content}</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               <button type="button" className="btn" onClick={() => handleLike(index)}>
