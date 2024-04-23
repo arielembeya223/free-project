@@ -65,32 +65,47 @@ class ajaxController extends Controller
     public function post(Request $request)
     {
         $user = $request->user();
+        $lang=$user->lang;
+        $tr = new GoogleTranslate();
+        $tr->setOptions(['verify' => false]);
+        $user = $request->user();
         $posts = Post::where('user_id', $user->id)
                     ->get();
+        foreach ($posts as $post)
+        {
+            $post->content =$tr->setSource()->setTarget($lang)->translate($post->content);
+        }
        
         return response()->json($posts);
     }
-    public function tweets()
+    public function tweets(Request $request)
     {
-        
+        $user = $request->user();
+        $lang=$user->lang;   
+        $tr = new GoogleTranslate();
+        $tr->setOptions(['verify' => false]);
         $tweets = Post::join('users', 'posts.user_id', '=', 'users.id')
                 ->orderBy('posts.created_at', 'desc')
                 ->select('posts.*', 'users.name as user_name')
                 ->get();
-        
+        foreach ($tweets as $tweet)
+        {
+            $tweet->content =$tr->setSource()->setTarget($lang)->translate($tweet->content);
+        }
         return response()->json($tweets);
     }
     
     public function lasts(Request $request)
     {
         $user = $request->user();
+        $lang=$user->lang;   
+        $tr = new GoogleTranslate();
         $messages = Discussion::join('users', 'discussions.sender_id', '=', 'users.id')
                         ->where('discussions.receiver_id', $user->id)
                         ->orderBy('discussions.created_at', 'desc')
                         ->select('discussions.*', 'users.name as sender_name')
                         ->take(5)
                         ->get();
-        
         return response()->json($messages);
     }
 }
