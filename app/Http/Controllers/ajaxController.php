@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\discussion;
@@ -35,7 +35,7 @@ class ajaxController extends Controller
         $user = $request->user();
         $id1 =$user->id;
         $id2 = $numero;
-        
+        $lang=$user->lang;
         // Récupération des messages de la base de données
         $messagesFromDatabase = discussion::where('sender_id', $id1)
             ->where('receiver_id', $id2)
@@ -43,13 +43,17 @@ class ajaxController extends Controller
             ->where('receiver_id', $id1)
             ->orderBy('created_at', 'asc')
             ->get();
-    
+        //message traduit
+        $tr = new GoogleTranslate();
+        $tr->setOptions(['verify' => false]);
+        //
         // Construction du tableau de messages à renvoyer
+        //$tr->setSource()->setTarget('ka')->translate('Goodbye');
         $messages = [];
         foreach ($messagesFromDatabase as $message) {
             $messages[] = [
                 'id' => $message->id,
-                'contenu' => $message->contenu,
+                'contenu' => $tr->setSource()->setTarget($lang)->translate($message->contenu),
                 'sender_id' => $message->sender_id,
                 'receiver_id' =>$message->receiver_id,
             ];
