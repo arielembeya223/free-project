@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
 use App\Models\User;

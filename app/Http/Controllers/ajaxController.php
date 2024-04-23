@@ -98,14 +98,21 @@ class ajaxController extends Controller
     public function lasts(Request $request)
     {
         $user = $request->user();
-        $lang=$user->lang;   
-        $tr = new GoogleTranslate();
+        $lang = $user->lang;
+        $translator = new GoogleTranslate();
+        $translator->setOptions(['verify' => false]);
+        // Récupérer les messages avec les noms des expéditeurs
         $messages = Discussion::join('users', 'discussions.sender_id', '=', 'users.id')
-                        ->where('discussions.receiver_id', $user->id)
-                        ->orderBy('discussions.created_at', 'desc')
-                        ->select('discussions.*', 'users.name as sender_name')
-                        ->take(5)
-                        ->get();
+            ->where('discussions.receiver_id', $user->id)
+            ->orderBy('discussions.created_at', 'desc')
+            ->select('discussions.*', 'users.name as sender_name')
+            ->take(5)
+            ->get();
+
+        foreach ($messages as $message) {
+                $message->contenu = $translator->setSource()->setTarget($lang)->translate($message->contenu);
+        }
+        
         return response()->json($messages);
     }
 }
