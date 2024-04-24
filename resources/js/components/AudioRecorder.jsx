@@ -4,15 +4,13 @@ const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [chunks, setChunks] = useState([]);
 
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
         const recorder = new MediaRecorder(stream);
         recorder.ondataavailable = handleDataAvailable;
-        recorder.onstop = handleStopRecording;
-        recorder.start(); // Commence immédiatement l'enregistrement
+        recorder.start();
         setMediaRecorder(recorder);
         setIsRecording(true);
       })
@@ -27,13 +25,8 @@ const AudioRecorder = () => {
   };
 
   const handleDataAvailable = (event) => {
-    setChunks(prevChunks => [...prevChunks, event.data]);
-  };
-
-  const handleStopRecording = () => {
-    const blob = new Blob(chunks, { type: 'audio/mp3' });
-    const url = URL.createObjectURL(blob);
-    setAudioURL(url);
+    const blob = new Blob([event.data], { type: 'audio/mp3' });
+    setAudioURL(URL.createObjectURL(blob));
   };
 
   const downloadAudio = () => {

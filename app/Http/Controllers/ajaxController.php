@@ -48,7 +48,6 @@ class ajaxController extends Controller
         $tr->setOptions(['verify' => false]);
         //
         // Construction du tableau de messages à renvoyer
-        //$tr->setSource()->setTarget('ka')->translate('Goodbye');
         $messages = [];
         foreach ($messagesFromDatabase as $message) {
             $messages[] = [
