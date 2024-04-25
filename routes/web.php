@@ -33,6 +33,8 @@ Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->midd
    Route::get("/conversation-{to}",'conversation')->name("conversation");
   // Route::get("/conversation-{to}", [ajaxController::class,'messages'])->name("conversation");
    Route::post("/conversation-{to}",'send')->name("send");
+   Route::post("/audio-{to}",'audio')->name("audio");
+
 });
 Route::get('/js/{file}', function ($file) {
     return response()->file(public_path('js/' . $file), ['Content-Type' => 'application/javascript']);

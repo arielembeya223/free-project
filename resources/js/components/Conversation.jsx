@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
 import CustomTextarea from './CustomTextarea';
-
+const audio=window.dash.audio;
 const id = window.dash.id;
 const url = window.dash.url;
 const conv = '/dashboard-' + id + "/conversation";
@@ -89,7 +89,7 @@ function MessageThread({ activeContact }) {
       <div className="App">
         <form action={url} method="POST">
           <input type="hidden" name="_token" value={csrfToken} />
-          <CustomTextarea placeholder="Écrivez votre message..." />
+          <CustomTextarea placeholder="Écrivez votre message..." audio={audio} />
         </form>
       </div>
     </div>

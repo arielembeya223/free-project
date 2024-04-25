@@ -31,7 +31,8 @@ class dashboardController extends Controller
     
     public function conversation(Request $request)
     {
-        return view("dashboard.conversation"); 
+       $to= $request->route('to');
+        return view("dashboard.conversation",['to'=>$to]); 
     }
     public function addContact(addRequest $request)
     {
@@ -81,5 +82,9 @@ class dashboardController extends Controller
         Post::create(['user_id'=>$id,'content'=>$request->validated('content')]);
 
         return back()->with("success",'Post ajoute');
+    }
+    public function audio()
+    {
+         dd('bonjour');
     }
 }

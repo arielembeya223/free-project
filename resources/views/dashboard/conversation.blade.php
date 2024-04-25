@@ -12,7 +12,8 @@
       annonce:"{{Route('dashboard.annonce',['user'=>$id])}}",
       compte:"{{Route('dashboard.compte',['user'=>$id])}}",
       id:"{{$id}}",
-      url:"{{app('request')->url()}}"
+      url:"{{app('request')->url()}}",
+      audio:"{{ route('dashboard.audio',['user'=>$id,'to'=>$to]) }}"
   };
 </script>
 @endsection

@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-
-const AudioRecorder = () => {
+import React, { useState, useEffect } from 'react';
+//{ placeholder }
+const AudioRecorder = ({ audio }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioFile, setAudioFile] = useState(null);
+  const [csrfToken, setCsrfToken] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Récupération du token CSRF
+        const csrfResponse = await axios.get('/csrf-token');
+        setCsrfToken(csrfResponse.data.csrf_token);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+      }
+    };
 
+    fetchData();
+  }, []);
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
@@ -28,95 +42,89 @@ const AudioRecorder = () => {
   const handleDataAvailable = (event) => {
     const blob = new Blob([event.data], { type: 'audio/mp3' });
     setAudioURL(URL.createObjectURL(blob));
+    setAudioFile(blob);
   };
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const downloadAudio = () => {
-    if (audioURL) {
-      const downloadLink = document.createElement('a');
-      downloadLink.href = audioURL;
-      downloadLink.setAttribute('download', 'audio.mp3');
-      downloadLink.click();
+  const handleFileChange = (event) => {
+    setAudioFile(event.target.files[0]);
+  };
+
+  const handleSubmit = (event) => {
+    if (audioFile) {
+      const formData = new FormData();
+      formData.append('audio', audioFile);
+      fetch('/votre-url-d-envoi', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        // Gérer la réponse de l'envoi
+      })
+      .catch(error => {
+        console.error('Error sending audio:', error);
+      });
     }
   };
 
   return (
     <div className="container d-flex justify-content-center my-4 mb-5">
       <div id="audioplayer">
-        {audioURL && (
+        {!audioURL && (
           <div>
-            <i id="pButton" className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`} onClick={togglePlay}></i>
-            <div id="timeline">
-              <div id="playhead"></div>
-            </div>
-            <audio controls className="custom-audio" src={audioURL}></audio>
-            <button onClick={downloadAudio} style={{
-              borderRadius: '20px',
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: 'pointer',
-              backgroundColor: '#007bff',
-              borderColor: '#007bff',
-              color: '#fff',
-              border: 'none',
-              marginTop: '10px'
-            }}>
-              Envoyer
-            </button>
+            {!isRecording ? (
+              <button onClick={startRecording} type="button">
+                Start Recording
+              </button>
+            ) : (
+              <button onClick={stopRecording} type="button" style={{ backgroundColor: '#ff6347' }}>
+                Stop Recording
+              </button>
+            )}
           </div>
         )}
-        {!audioURL && (
-          <button onClick={isRecording ? stopRecording : startRecording} style={{
-            borderRadius: '20px',
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer',
-            backgroundColor: isRecording ? '#ff6347' : '#28a745',
-            borderColor: isRecording ? '#ff6347' : '#28a745',
-            color: '#fff',
-            border: 'none',
-            marginRight: '10px'
-          }}>
-            {isRecording ? 'Stop Recording' : 'Start Recording'}
-          </button>
+        {audioURL && (
+          <div>
+            <audio controls src={audioURL}></audio>
+          </div>
         )}
       </div>
+      {audioURL && (
+        <form onSubmit={handleSubmit} action={audio} method='POST'>
+           <input type="hidden" name="_token" value={csrfToken} />
+          <input type="file" accept="audio/*" onChange={handleFileChange} hidden/>
+          <button type="submit">Envoyer</button>
+        </form>
+      )}
       <style>{`
-        #pButton {
-          float: left;
-          margin-top: 12px;
+        button {
+          margin-right: 10px;
           cursor: pointer;
-          transition: all 0.3s ease-in-out; /* Ajout de l'animation de transition */
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 20px;
         }
 
-        #timeline {
-          width: 90%;
-          height: 2px;
-          margin-top: 20px;
-          margin-left: 10px;
-          border-radius: 15px;
-          background: rgba(0, 0, 0, 0.3);
+        button:hover {
+          opacity: 0.8;
         }
 
-        #playhead {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          margin-top: -3px;
-          background: black;
-          cursor: pointer;
+        #audioplayer {
+          margin-bottom: 20px;
         }
 
-        .custom-audio {
-          width: 100%;
-          margin-top: 20px;
+        input[type="file"] {
+          display: block;
+          margin-bottom: 10px;
         }
       `}</style>
     </div>
   );
 };
 
-export default AudioRecorder;
+export default AudioRecorder

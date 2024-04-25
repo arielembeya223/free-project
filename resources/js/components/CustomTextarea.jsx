@@ -29,7 +29,7 @@ const customStyles = {
   },
 };
 
-const CustomTextarea = ({ placeholder }) => {
+const CustomTextarea = ({ placeholder,audio }) => {
   const [message, setMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -78,7 +78,7 @@ const CustomTextarea = ({ placeholder }) => {
         contentLabel="Boîte de dialogue modale"
         style={customStyles} // Appliquer les styles personnalisés à la modale
       >
-        <AudioRecorder />
+        <AudioRecorder audio={audio} />
       </Modal>
     </div>
   );
