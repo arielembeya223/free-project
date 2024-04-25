@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-//{ placeholder }
+import axios from 'axios'; // Assurez-vous d'importer axios si vous ne l'avez pas déjà fait
+
 const AudioRecorder = ({ audio }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
@@ -7,6 +8,7 @@ const AudioRecorder = ({ audio }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioFile, setAudioFile] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,6 +22,7 @@ const AudioRecorder = ({ audio }) => {
 
     fetchData();
   }, []);
+
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
@@ -49,17 +52,15 @@ const AudioRecorder = ({ audio }) => {
     setIsPlaying(!isPlaying);
   };
 
-  const handleFileChange = (event) => {
-    setAudioFile(event.target.files[0]);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     if (audioFile) {
-      const formData = new FormData();
-      formData.append('audio', audioFile);
-      fetch('/votre-url-d-envoi', {
+      fetch(audio, {
         method: 'POST',
-        body: formData
+        body: audioFile,
+        headers: {
+          'Content-Type': 'audio/mp3',
+          'X-CSRF-Token': csrfToken,
+        },
       })
       .then(response => {
         // Gérer la réponse de l'envoi
@@ -93,9 +94,8 @@ const AudioRecorder = ({ audio }) => {
         )}
       </div>
       {audioURL && (
-        <form onSubmit={handleSubmit} action={audio} method='POST'>
-           <input type="hidden" name="_token" value={csrfToken} />
-          <input type="file" accept="audio/*" onChange={handleFileChange} hidden/>
+        <form onSubmit={handleSubmit}>
+          <input type="hidden" name="_token" value={csrfToken} />
           <button type="submit">Envoyer</button>
         </form>
       )}
@@ -117,14 +117,9 @@ const AudioRecorder = ({ audio }) => {
         #audioplayer {
           margin-bottom: 20px;
         }
-
-        input[type="file"] {
-          display: block;
-          margin-bottom: 10px;
-        }
       `}</style>
     </div>
   );
 };
 
-export default AudioRecorder
+export default AudioRecorder;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
+use App\Http\Requests\audioRequest;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\discussion;
@@ -83,8 +84,12 @@ class dashboardController extends Controller
 
         return back()->with("success",'Post ajoute');
     }
-    public function audio()
+    public function audio(audioRequest $request)
     {
-         dd('bonjour');
-    }
+        $validatedData = $request->validated();
+
+        
+        $audioFile = $validatedData['audio'];
+        dd($audioFile);
+}
 }
