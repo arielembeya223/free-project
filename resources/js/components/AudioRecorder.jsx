@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Assurez-vous d'importer axios si vous ne l'avez pas déjà fait
+import axios from 'axios';
 
 const AudioRecorder = ({ audio }) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -8,6 +8,7 @@ const AudioRecorder = ({ audio }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioFile, setAudioFile] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
+  const [selectedAudioFile, setSelectedAudioFile] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +33,7 @@ const AudioRecorder = ({ audio }) => {
         setMediaRecorder(recorder);
         setIsRecording(true);
       })
-      .catch(error => console.error('Error accessing media devices: ', error));
+      .catch(error => console.error('Erreur lors de l\'accès aux périphériques multimédias: ', error));
   };
 
   const stopRecording = () => {
@@ -52,22 +53,29 @@ const AudioRecorder = ({ audio }) => {
     setIsPlaying(!isPlaying);
   };
 
-  const handleSubmit = () => {
-    if (audioFile) {
-      fetch(audio, {
-        method: 'POST',
-        body: audioFile,
-        headers: {
-          'Content-Type': 'audio/mp3',
-          'X-CSRF-Token': csrfToken,
-        },
-      })
-      .then(response => {
+  const handleSelectedAudioFile = (event) => {
+    setSelectedAudioFile(event.target.files[0]);
+  };
+
+  const handleSubmit = async (event) => {
+    
+    if (selectedAudioFile) {
+      const formData = new FormData();
+      formData.append('audio', selectedAudioFile);
+      formData.append('_token', csrfToken);
+      
+      try {
+        const response = await axios.post(audio, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
         // Gérer la réponse de l'envoi
-      })
-      .catch(error => {
-        console.error('Error sending audio:', error);
-      });
+        // Si tout va bien, soumettre le formulaire manuellement
+        document.getElementById('audioForm').submit();
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'audio:', error);
+      }
     }
   };
 
@@ -94,8 +102,9 @@ const AudioRecorder = ({ audio }) => {
         )}
       </div>
       {audioURL && (
-        <form onSubmit={handleSubmit}>
+        <form id="audioForm" action={audio} method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
           <input type="hidden" name="_token" value={csrfToken} />
+          <input type="file" name="audio"  onChange={handleSelectedAudioFile} />
           <button type="submit">Envoyer</button>
         </form>
       )}

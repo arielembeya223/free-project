@@ -22,7 +22,7 @@ class audioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "audio"=>['required'],
+            "audio" => ['required', 'file', 'mimes:mp3'],
         ];
     }
 }

@@ -84,12 +84,14 @@ class dashboardController extends Controller
 
         return back()->with("success",'Post ajoute');
     }
-    public function audio(audioRequest $request)
+    public function audio(Request $request)
     {
-        $validatedData = $request->validated();
+    // Voir toutes les données de la demande
+    dd($request->all());
+    die();
+    // Vous pouvez également obtenir le fichier audio directement
+    $audioFile = $request->file('audio');
+    dd($audioFile);
 
-        
-        $audioFile = $validatedData['audio'];
-        dd($audioFile);
-}
+   }
 }
