@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Stichoza\GoogleTranslate\GoogleTranslate;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
 use App\Http\Requests\audioRequest;
@@ -84,14 +84,22 @@ class dashboardController extends Controller
 
         return back()->with("success",'Post ajoute');
     }
+    private function uppload(UploadedFile $file, string $name="public"){
+        return $file->store($name,"public");
+       }
+       
     public function audio(Request $request)
     {
-    // Voir toutes les données de la demande
-    dd($request->all());
-    die();
-    // Vous pouvez également obtenir le fichier audio directement
+    $sender_id=$request->user()->id;
+    $receiver_id=$request->route('to');
     $audioFile = $request->file('audio');
-    dd($audioFile);
-
+    $chemin=$this->uppload($audioFile);
+    discussion::create([
+        'sender_id'=>$sender_id,
+        'receiver_id'=>$receiver_id,
+        'contenu'=>$chemin,
+        'type'=>'audio'
+    ]);
+     return back()->with("success",'audio envoye');
    }
 }

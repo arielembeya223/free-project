@@ -45,10 +45,10 @@ const AudioRecorder = ({ audio }) => {
 
   return (
     <div className="container d-flex justify-content-center my-4 mb-5">
-      <form onSubmit={handleSubmit} encType="multipart/form-data" action={audio} method="POST">
+      <form onSubmit={handleSubmit}  action={audio} method="POST" encType="multipart/form-data">
         {/* Input de fichier */}
         <label className="custom-file-upload">
-          <input type="file" onChange={handleSelectedAudioFile} />
+          <input type="file" accept='audio/*' name='audio' />
           Sélectionner un fichier audio
         </label>
         {/* Token CSRF */}

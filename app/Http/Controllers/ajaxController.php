@@ -55,6 +55,7 @@ class ajaxController extends Controller
                 'contenu' => $tr->setSource()->setTarget($lang)->translate($message->contenu),
                 'sender_id' => $message->sender_id,
                 'receiver_id' =>$message->receiver_id,
+                'type'=>$message->type
             ];
         }
     
