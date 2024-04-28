@@ -39,11 +39,28 @@ function MessageList({ messages }) {
         }
 
         return (
-            <div key={message.id} style={{ "marginTop": "22px" }} className={messageClass}>
-                <span className={messageContentClass}>
-                    {message.contenu}
-                </span>
-            </div>
+          <div key={message.id} style={{ "marginTop": "22px" }} className={messageClass}>
+            {message.type === 'audio' ? (
+              <div className="custom-audio-player">
+                <audio controls>
+                  <source src={'/storage/'+message.contenu} type="audio/mpeg" />
+                  Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+                <div className="audio-controls">
+                  <div className="audio-volume">
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  </div>
+                  <div className="audio-duration">
+                    {message.duree}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <span className={messageContentClass}>
+                {message.contenu}
+              </span>
+            )}
+          </div>
         );
       })}
     </div>
@@ -125,7 +142,38 @@ function Conversation() {
   );
 }
 
+// Stylisation de l'élément audio
+const styles = `
+.custom-audio-player {
+  display: flex;
+  align-items: center;
+}
+
+.custom-audio-player audio {
+  margin-right: 10px;
+  width: 200px;
+}
+
+.custom-audio-player .audio-controls {
+  display: flex;
+  align-items: center;
+}
+
+.custom-audio-player .audio-volume {
+  margin-right: 10px;
+}
+
+.custom-audio-player .audio-duration {
+  font-size: 12px;
+}
+`;
+
 if (document.getElementById('Conversation')) {
+  const styleTag = document.createElement('style');
+  styleTag.type = 'text/css';
+  styleTag.appendChild(document.createTextNode(styles));
+  document.head.appendChild(styleTag);
+
   const Index = createRoot(document.getElementById("Conversation"));
   Index.render(
     <React.StrictMode>
