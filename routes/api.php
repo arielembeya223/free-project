@@ -33,6 +33,8 @@ Route::middleware('csrf')->group(function () {
         Route::post("/add-contact",'addContact')->name("addContact");
     });
 });
+
+Route::middleware('auth:sanctum')->get('/myCanal', 'ajaxController@/myCanal');
 Route::middleware('auth:sanctum')->get('/contacts', 'ajaxController@index');
 Route::middleware('auth:sanctum')->get('/messages', 'ajaxController@messages');
 Route::middleware('auth:sanctum')->get('/messages', 'ajaxController@post');

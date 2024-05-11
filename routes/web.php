@@ -36,8 +36,8 @@ Route::prefix("/dashboard-{user}")->controller(dashboardController::class)->midd
    Route::post("/audio-{to}",'audio')->name("audio");
    //route lie au channels
    Route::post("/addChannels",'addChannels')->name("addChannels");
-   Route::post("/addMembers-{Channel}",'addChannels')->name("addChannels");
-   Route::post("/addMembers-{Channel}",'addChannels')->name("addChannels");
+   Route::post("/addMembers-{Channel}",'addChannels')->name("/addMembers");
+   Route::post("/addMembers-{Channel}",'addChannels')->name("");
    Route::post("/addMessages-{Channel}",'addMessages')->name("addMessages");
 });
 Route::get('/js/{file}', function ($file) {
@@ -49,6 +49,8 @@ Route::get('/csrf-token', function() {
 });
 Route::get('/contacts', [ajaxController::class,'index']);
 //messages 'ajaxController@post'Tweet lasts
+//myCanal
+Route::get('/myCanal', [ajaxController::class,'myCanal']);
 Route::get('/messages', [ajaxController::class,'messages']);
 Route::get('/posts', [ajaxController::class,'post']);
 Route::get('/tweets', [ajaxController::class,'tweets']);

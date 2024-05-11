@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Channel;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Http\Request;
 use App\Models\Contact;
@@ -114,5 +116,14 @@ class ajaxController extends Controller
         }
         
         return response()->json($messages);
+    }
+    //canal cree par l'utilisateur
+    public function myCanal(Request $request)
+    {
+        $id=$request->user()->id;
+        $channels=Channel::Where("user_id",$id)
+                   ->get();
+        return response()->json($channels);
+
     }
 }

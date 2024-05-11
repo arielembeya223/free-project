@@ -123,6 +123,13 @@ class dashboardController extends Controller
 
     $data=$request->validated();
     
+    $user=$request->user();
+    
+    $user_id=$user->id;
+
+    $data['user_id']=$user_id;
+  
+    
     Channel::create($data);
 
     return back()->with("success",'channel cree');

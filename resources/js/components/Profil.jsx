@@ -5,6 +5,9 @@ import { createRoot } from 'react-dom';
 
 const addContact = window.dash.add;
 
+const canal = window.dash.canal;
+
+
 // Styles personnalisés pour les boîtes modales
 const customContactModalStyles = {
   overlay: {
@@ -74,11 +77,7 @@ function Profil() {
   const [channelDescription, setChannelDescription] = useState('');
   const [csrfToken, setCsrfToken] = useState('');
   const [contacts, setContacts] = useState([]);
-  const [channels, setChannels] = useState([
-    { id: 1, name: 'Général', isActive: true },
-    { id: 2, name: 'Projets', isActive: false },
-    { id: 3, name: 'Random', isActive: false },
-  ]);
+  const [channels, setChannels] = useState([]);
 
   useEffect(() => {
     // Récupération du token CSRF lors du chargement du composant
@@ -99,7 +98,15 @@ function Profil() {
         console.error('Erreur lors de la récupération des contacts :', error);
       }
     };
-
+    const fetchChannels = async () => {
+      try {
+        const response = await axios.get('/myCanal');
+        setChannels(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des canaux :', error);
+      }
+    };
+    fetchChannels();
     fetchCsrfToken();
     fetchContacts();
   }, []);
@@ -228,22 +235,21 @@ function Profil() {
         style={customChannelModalStyles} // Appliquer les styles personnalisés à la modale
       >
         <h3>Créer un canal</h3>
-        <form>
+        <form action={canal} method='POST'>
+        <input type="hidden" name="_token" value={csrfToken} />
           <input
             type="text"
             className="form-control"
             placeholder="Nom du canal"
-            value={newChannelName}
-            onChange={handleChannelNameChange}
+            name="name"
           />
           <textarea
             className="form-control mt-2"
             placeholder="Description du canal"
-            value={channelDescription}
-            onChange={handleChannelDescriptionChange}
+            name="description"
           />
           <div className="mt-2">
-            <button className="btn btn-primary mr-2" type="submit" onClick={handleCreateChannel}>Créer</button>
+            <button className="btn btn-primary mr-2" type="submit">Créer</button>
             <button className="btn btn-secondary m-2" onClick={closeChannelModal}>Annuler</button>
           </div>
         </form>
