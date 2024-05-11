@@ -6,6 +6,9 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@babel/core": "^7.24.5",
+        "@babel/plugin-transform-runtime": "^7.24.3",
+        "@babel/preset-env": "^7.24.5",
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-react": "^4.2.0",
         "axios": "^1.6.8",
@@ -20,13 +23,16 @@
         "webpack-cli": "^5.1.4"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.12.1",
         "@babel/preset-react": "^7.24.1",
+        "@babel/runtime": "^7.24.5",
         "@fortawesome/fontawesome-svg-core": "^6.5.2",
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@material-ui/core": "^4.12.4",
         "@popperjs/core": "^2.11.8",
         "@vitejs/plugin-react": "^4.2.1",
+        "core-js": "^3.37.0",
         "framer-motion": "^11.0.24",
         "mic-recorder-to-mp3": "^2.2.2",
         "react": "^18.2.0",
@@ -39,7 +45,9 @@
         "react-player": "^2.16.0",
         "react-refresh": "^0.14.0",
         "react-router-dom": "^6.22.3",
+        "react-speech-recognition": "^3.10.0",
         "react-waveform": "^0.1.0",
+        "regenerator-runtime": "^0.14.1",
         "sass": "^1.72.0",
         "three": "^0.163.0",
         "wavesurfer-react": "^3.0.2",

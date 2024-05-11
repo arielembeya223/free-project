@@ -6,10 +6,25 @@ use Illuminate\Http\Request;
 use  App\Http\Requests\addRequest;
 use App\Http\Requests\audioRequest;
 use App\Models\User;
+
 use App\Models\Contact;
+
 use App\Models\discussion;
+
 use App\Models\Post;
+
+use App\Models\Channel;
+
+use App\Models\Channel_messages;
+
+use App\Models\ChannelMember;
+
+
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\addChannelsRequest;
+
+use App\Http\Requests\channelRequest;
+
 class dashboardController extends Controller
 {
     public function show()
@@ -102,4 +117,27 @@ class dashboardController extends Controller
     ]);
      return back()->with("success",'audio envoye');
    }
+   public function addChannels(addChannelsRequest $request)
+   {
+    
+
+    $data=$request->validated();
+    
+    Channel::create($data);
+
+    return back()->with("success",'channel cree');
+   }
+   public function addMembers(Request $request,Channel $channel){
+   $user_id= $request->route('user');
+
+   ChannelMember::create(['user_id'=>$user_id,'channel_id'=>$channel]);
+  }
+  public function addMessages(channelRequest $request,Channel $channel){
+    $data=$request->validated();
+
+    $data[]=['user_id'=>$request->user()->id,'channel_id'=>$channel];
+
+    
+    return back()->with("success",'message envoye');
+  }
 }
