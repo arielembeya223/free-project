@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
+import { Spinner } from 'reactstrap'; // Utilisation du spinner de reactstrap
 
 const settingsStyle = {
   width: '20%',
@@ -30,8 +31,9 @@ const bellIconStyle = {
 };
 
 export function SettingsDashboardZone() {
-  // Simuler des données de notifications
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
@@ -39,12 +41,13 @@ export function SettingsDashboardZone() {
         setNotifications(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des canaux :', error);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchNotifications();
   }, []);
-  // Fonction pour supprimer une notification
-
 
   return (
     <div id="SettingsDashboardZone" className="col-md-3" style={settingsStyle}>
@@ -53,13 +56,18 @@ export function SettingsDashboardZone() {
           <div style={headerStyle}>
             <h5 style={{ margin: 0 }}>Canal</h5>
           </div>
-          {notifications.map(notification => (
-            <div key={notification.id} style={notificationStyle}>
-              <span>{notification.name}</span>
-             <a href={"/Channel-"+notification.id} class="blockquote-footer text-decoration-none">voir</a>
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+              <Spinner color="primary" /> {/* Utilisation d'un spinner de reactstrap */}
             </div>
-          ))}
-          
+          ) : (
+            notifications.map(notification => (
+              <div key={notification.id} style={notificationStyle}>
+                <span>{notification.name}</span>
+                <a href={"/Channel-"+notification.id} className="blockquote-footer text-decoration-none">voir</a>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

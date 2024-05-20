@@ -11,6 +11,7 @@ import './bootstrap';
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./components/canal"
 import './components/welcome';
 import './components/RegistrationForm';
