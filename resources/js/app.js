@@ -11,7 +11,7 @@ import './bootstrap';
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+import "./components/canal"
 import './components/welcome';
 import './components/RegistrationForm';
 import './components/LoginForm';
@@ -20,5 +20,5 @@ import "./components/dashboard"
 import './components/HeaderDashboard';
 import './components/Messages'
 import "./components/Annonce";
-import "./components/Profil"
-import "./components/Conversation"
+import "./components/Profil";
+import "./components/Conversation";

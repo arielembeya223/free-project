@@ -122,8 +122,14 @@ class ajaxController extends Controller
     {
         $id=$request->user()->id;
         $channels=Channel::Where("user_id",$id)
+                   ->orderBy('created_at','desc')
                    ->get();
         return response()->json($channels);
 
+    }
+    public function allCanal()
+    {
+        $channels=Channel::orderBy('created_at','desc')->get();
+       return response()->json($channels);
     }
 }

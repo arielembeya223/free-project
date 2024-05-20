@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Http\UploadedFile;
+
 use Illuminate\Http\Request;
+
 use  App\Http\Requests\addRequest;
+
 use App\Http\Requests\audioRequest;
+
 use App\Models\User;
 
 use App\Models\Contact;
@@ -48,6 +53,7 @@ class dashboardController extends Controller
     public function conversation(Request $request)
     {
        $to= $request->route('to');
+
         return view("dashboard.conversation",['to'=>$to]); 
     }
     public function addContact(addRequest $request)
@@ -68,7 +74,7 @@ class dashboardController extends Controller
 
         return back()->with("success",'contact ajoute');
     } else {
-        // L'utilisateur n'existe pas
+        
         return response()->json(['error' => 'Utilisateur non trouvé'], 404);
     }
 
@@ -77,6 +83,7 @@ class dashboardController extends Controller
     public function send(addRequest $request)
     {
         $form=$request->validated();
+
         $content=$form['content'];
 
 
@@ -89,6 +96,7 @@ class dashboardController extends Controller
             'contenu'=>$content
         ];
         discussion::create($data);
+
         return back()->with("success",'contact ajoute');
     }
     public function publie(addRequest $request)
@@ -106,9 +114,13 @@ class dashboardController extends Controller
     public function audio(Request $request)
     {
     $sender_id=$request->user()->id;
+
     $receiver_id=$request->route('to');
+
     $audioFile = $request->file('audio');
+
     $chemin=$this->uppload($audioFile);
+
     discussion::create([
         'sender_id'=>$sender_id,
         'receiver_id'=>$receiver_id,
@@ -119,8 +131,6 @@ class dashboardController extends Controller
    }
    public function addChannels(addChannelsRequest $request)
    {
-    
-
     $data=$request->validated();
     
     $user=$request->user();
@@ -134,17 +144,62 @@ class dashboardController extends Controller
 
     return back()->with("success",'channel cree');
    }
-   public function addMembers(Request $request,Channel $channel){
-   $user_id= $request->route('user');
+   public function addMembers(Request $request){
+   
+   $user_id=$request->user()->id;
+
+   $channel=$request->route("Channel");
 
    ChannelMember::create(['user_id'=>$user_id,'channel_id'=>$channel]);
+
+   return back()->with("success",'admis dans le groupe');
   }
-  public function addMessages(channelRequest $request,Channel $channel){
+  public function addMessages(channelRequest $request){
+
     $data=$request->validated();
 
-    $data[]=['user_id'=>$request->user()->id,'channel_id'=>$channel];
+    $channel=$request->route("Channel");
+
+    $data['user_id']=$request->user()->id;
+    
+    $data['channel_id']=$channel;
+
+    Channel_messages::create($data);
 
     
     return back()->with("success",'message envoye');
+  }
+  public function showChannel(Request $request)
+  {
+
+    $channel=$request->route("Channel");
+
+    $messages=Channel_messages::where('channel_id',$channel)->get();
+
+    $userId=$request->user()->id;
+
+    $join=false;
+
+    $isMember = ChannelMember::where('channel_id', $channel)
+                          ->where('user_id', $userId)
+                          ->exists();
+                          if ($isMember) {
+                           $join=true;
+                        } else {
+                            $join=false;
+                        }
+    /**traduction des messages du canal */
+    $user = $request->user();
+
+    $lang = $user->lang;
+
+    $translator = new GoogleTranslate();
+
+    $translator->setOptions(['verify' => false]); 
+
+   foreach ($messages as $message) {
+                            $message->contenu = $translator->setSource()->setTarget($lang)->translate($message->contenu);
+    }
+    return view("dashboard.channel",["channel"=>$channel,'join'=>$join,'messages'=>$messages]);
   }
 }
