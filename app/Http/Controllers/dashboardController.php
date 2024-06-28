@@ -30,10 +30,31 @@ use App\Http\Requests\addChannelsRequest;
 
 use App\Http\Requests\channelRequest;
 
+use function PHPSTORM_META\type;
+
 class dashboardController extends Controller
 {
+    public function Onglet(Request $request)
+    {
+        $user = $request->user();
+
+        $lang = $user->lang;
+    
+        $translator = new GoogleTranslate();
+    
+        $translator->setOptions(['verify' => false]);
+
+        $tabs=['acceuil'=>'acceuil','annonce'=>'annonce','Messages'=>'messages','Dashboard'=>'Dashboard'];
+
+        foreach ($tabs as $index=>$tab)
+        {
+            $tab = $translator->setSource()->setTarget($lang)->translate($tab);
+        }
+        return $tabs;
+    }
     public function show()
     {
+        
         return view("dashboard.show");
     }
     public function message()
@@ -58,8 +79,8 @@ class dashboardController extends Controller
     }
     public function addContact(addRequest $request)
     {
-       
-       $user_id_1= $request->route('user');
+    
+        $user_id_1= $request->route('user');
        $content = $request->validated();
 
     // Recherche de l'utilisateur avec le nom fourni
@@ -119,13 +140,41 @@ class dashboardController extends Controller
 
     $audioFile = $request->file('audio');
 
+    $extens=$audioFile->getClientOriginalExtension();
+
     $chemin=$this->uppload($audioFile);
+
+    $type=null;
+ 
+    if($extens === 'mp3')
+    {
+       $type='audio';
+    }
+    elseif($extens === 'docx' )
+    {
+       $type='docx';
+    }
+    elseif($extens === 'xlsx')
+    {
+    $type='excel';
+    }
+    elseif($extens === 'mp4')
+    {
+        $type='video'; 
+    }
+    elseif($extens === 'pptx')
+    {
+    $type='powerpoint';
+    }else
+    {
+        $type='unDefined';
+    }
 
     discussion::create([
         'sender_id'=>$sender_id,
         'receiver_id'=>$receiver_id,
         'contenu'=>$chemin,
-        'type'=>'audio'
+        'type'=>$type
     ]);
      return back()->with("success",'audio envoye');
    }

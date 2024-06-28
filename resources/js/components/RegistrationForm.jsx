@@ -15,6 +15,24 @@ const getLanguageName = (languageCode) => {
       return 'Allemand';
     case 'zh':
       return 'Mandarin';
+    case 'sw':
+      return 'Swahili';
+    case 'ln':
+      return 'Lingala';
+    case 'yo':
+      return 'Yoruba';
+    case 'ig':
+      return 'Igbo';
+    case 'ha':
+      return 'Hausa';
+    case 'am':
+      return 'Amharique';
+    case 'zu':
+      return 'Zoulou';
+    case 'xh':
+      return 'Xhosa';
+    case 'wo':
+      return 'Wolof';
     // Ajouter d'autres cas pour les langues supplémentaires
     default:
       return '';
@@ -34,6 +52,24 @@ const getFlagCode = (languageCode) => {
       return 'DE';
     case 'zh':
       return 'CN'; // Utilisation du code de pays ISO 3166-1 pour la Chine (CN) pour le mandarin
+    case 'sw':
+      return 'KE'; // Utilisation du code de pays ISO 3166-1 pour le Kenya (KE) pour le swahili
+    case 'ln':
+      return 'CD'; // Utilisation du code de pays ISO 3166-1 pour la République démocratique du Congo (CD) pour le lingala
+    case 'yo':
+      return 'NG'; // Utilisation du code de pays ISO 3166-1 pour le Nigéria (NG) pour le yoruba
+    case 'ig':
+      return 'NG'; // Utilisation du code de pays ISO 3166-1 pour le Nigéria (NG) pour l'igbo
+    case 'ha':
+      return 'NG'; // Utilisation du code de pays ISO 3166-1 pour le Nigéria (NG) pour le hausa
+    case 'am':
+      return 'ET'; // Utilisation du code de pays ISO 3166-1 pour l'Éthiopie (ET) pour l'amharique
+    case 'zu':
+      return 'ZA'; // Utilisation du code de pays ISO 3166-1 pour l'Afrique du Sud (ZA) pour le zoulou
+    case 'xh':
+      return 'ZA'; // Utilisation du code de pays ISO 3166-1 pour l'Afrique du Sud (ZA) pour le xhosa
+    case 'wo':
+      return 'SN'; // Utilisation du code de pays ISO 3166-1 pour le Sénégal (SN) pour le wolof
     // Ajouter d'autres cas pour les langues supplémentaires
     default:
       return null;
@@ -85,6 +121,15 @@ function RegistrationForm() {
             <option value="es">{getLanguageName('es')}</option>
             <option value="de">{getLanguageName('de')}</option>
             <option value="zh">{getLanguageName('zh')}</option>
+            <option value="sw">{getLanguageName('sw')}</option>
+            <option value="ln">{getLanguageName('ln')}</option>
+            <option value="yo">{getLanguageName('yo')}</option>
+            <option value="ig">{getLanguageName('ig')}</option>
+            <option value="ha">{getLanguageName('ha')}</option>
+            <option value="am">{getLanguageName('am')}</option>
+            <option value="zu">{getLanguageName('zu')}</option>
+            <option value="xh">{getLanguageName('xh')}</option>
+            <option value="wo">{getLanguageName('wo')}</option>
             {/* Ajouter d'autres langues avec les drapeaux correspondants */}
           </select>
           <div style={{marginLeft: '10px'}}>

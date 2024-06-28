@@ -14,7 +14,12 @@
   margin-bottom: 10px;
   overflow: hidden; /* Supprime la barre de défilement */
 }
-
+.icon-class {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
 .custom-textarea .icons {
   position: absolute;
   bottom: 17px; /* Ajustement vertical */

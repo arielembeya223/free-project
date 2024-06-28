@@ -6,7 +6,7 @@ use App\Http\Controllers\inscriptionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\welcomeController;
 use App\Http\Controllers\ajaxController;
-
+use App\Http\Controllers\translatorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +50,9 @@ Route::get('/js/{file}', function ($file) {
 Route::get('/csrf-token', function() {
     return response()->json(['csrf_token' => csrf_token()]);
 });
+//Route des translate des audio
+Route::post("/translate",[translatorController::class,'translateAudio']);
+//
 Route::get('/contacts', [ajaxController::class,'index']);
 //messages 'ajaxController@post'Tweet lasts
 
