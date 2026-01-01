@@ -1,4 +1,4 @@
-# 🌍 LocalLingua — Communicate Beyond Language Barriers
+# 🌍 freeSocial — Communicate Beyond Language Barriers
 
 free social, social-impact web platform** that allows people to communicate with anyone **without knowing each other’s language**.
 
@@ -62,7 +62,7 @@ This is a **single Laravel project** with React integrated inside it:
 /public
 
 yaml
-Copier le code
+
 
 ---
 
@@ -117,7 +117,7 @@ npm run dev
 Then open:
 
 cpp
-Copier le code
+
 http://127.0.0.1:8000
 🌍 Focus on Local Languages
 LocalLingua is designed to:
